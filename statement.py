@@ -37,7 +37,7 @@ def statement(invoice, plays):
             raise ValueError(f"unknown type: {play['type']}")
         # add volume credits
         volumeCredits += max(perf['audience'] - 30, 0)
-        # add extra credit for every ten comedy attendees
+        # add extra credit for every five comedy attendees
         if "comedy" == play['type']:
             volumeCredits += round(perf['audience'] / 5)
         # print line for this order
