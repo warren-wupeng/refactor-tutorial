@@ -41,13 +41,13 @@ def statement(invoice, plays):
         if "comedy" == play['type']:
             volumeCredits += round(perf['audience'] / 5)
         # print line for this order
-        result += f"{play['name']}: " \
+        result += f"  {play['name']}: " \
                   f"{format_currency(thisAmount/100, 'USD', locale='en_US')} " \
                   f"({perf['audience']} seats)\n"
         totalAmount += thisAmount
     result += f"Amount owed is " \
               f"{format_currency(totalAmount/100, 'USD', locale='en_US')}\n"
-    result += f"You earned ${volumeCredits} credits\n"
+    result += f"You earned {volumeCredits} credits\n"
     return result
 
 
