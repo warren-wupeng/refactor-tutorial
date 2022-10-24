@@ -17,9 +17,6 @@ INVOICE = {
 
 
 def statement(invoice, plays):
-    # step2 移除变量play
-    # 使用手法1: 提取方法
-    # 使用手法2：以查询代替临时变量
     def amountFor(aPerformance, play):
         # extract function
         if play['type'] == "tragedy":
@@ -35,13 +32,16 @@ def statement(invoice, plays):
             raise ValueError(f"unknown type: {play['type']}")
         return result
 
+    def playFor(aPerformance):
+        play = plays[aPerformance['playID']]
+        return play
+
     totalAmount = 0
     volumeCredits = 0
     result = f"Statement for {invoice['customer']}\n"
 
     for perf in invoice['performances']:
-        play = plays[perf['playID']]
-        thisAmount = amountFor(perf, play)
+        play = playFor(perf)
         # add volume credits
         volumeCredits += max(perf['audience'] - 30, 0)
         # add extra credit for every five comedy attendees
@@ -49,9 +49,9 @@ def statement(invoice, plays):
             volumeCredits += round(perf['audience'] / 5)
         # print line for this order
         result += f"  {play['name']}: " \
-                  f"{format_currency(thisAmount/100, 'USD', locale='en_US')} " \
+                  f"{format_currency(amountFor(perf, play) / 100, 'USD', locale='en_US')} " \
                   f"({perf['audience']} seats)\n"
-        totalAmount += thisAmount
+        totalAmount += amountFor(perf, play)
     result += f"Amount owed is " \
               f"{format_currency(totalAmount/100, 'USD', locale='en_US')}\n"
     result += f"You earned {volumeCredits} credits\n"

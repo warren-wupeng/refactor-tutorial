@@ -17,11 +17,29 @@ INVOICE = {
 
 
 def statement(invoice, plays):
-    # step2 移除变量play
-    # 使用手法1: 提取方法
-    # 使用手法2：以查询代替临时变量
-    def amountFor(aPerformance, play):
+    def enrichPerformance(aPerformance):
+        def playFor(aPerformance):
+            play = plays[aPerformance['playID']]
+            return play
+
+        result = dict() | aPerformance
+        result['play'] = playFor(result)
+        return result
+
+    statementData = dict()
+    statementData['customer'] = invoice['customer']
+    statementData['performances'] = list(
+        map(enrichPerformance, invoice['performances'])
+    )
+
+    return renderPlainText(statementData, plays)
+
+
+def renderPlainText(data, plays):
+
+    def amountFor(aPerformance):
         # extract function
+        play = aPerformance['play']
         if play['type'] == "tragedy":
             result = 40000
             if aPerformance['audience'] > 30:
@@ -35,25 +53,39 @@ def statement(invoice, plays):
             raise ValueError(f"unknown type: {play['type']}")
         return result
 
-    totalAmount = 0
-    volumeCredits = 0
-    result = f"Statement for {invoice['customer']}\n"
-
-    for perf in invoice['performances']:
-        play = plays[perf['playID']]
-        thisAmount = amountFor(perf, play)
+    def volumeCreditFor(aPerformance):
         # add volume credits
-        volumeCredits += max(perf['audience'] - 30, 0)
+        result = 0
+        result += max(aPerformance['audience'] - 30, 0)
         # add extra credit for every five comedy attendees
-        if "comedy" == play['type']:
-            volumeCredits += round(perf['audience'] / 5)
+        if "comedy" == aPerformance['play']['type']:
+            result += round(aPerformance['audience'] / 5)
+        return result
+
+    def usd(aNumber):
+        return format_currency(aNumber / 100, 'USD', locale='en_US')
+
+    def totalVolumeCredits():
+        result = 0
+        for perf in data['performances']:
+            result += volumeCreditFor(perf)
+        return result
+
+    def totalAmount():
+        result = 0
+        for perf in data['performances']:
+            result += amountFor(perf)
+        return result
+
+    result = f"Statement for {data['customer']}\n"
+    for perf in data['performances']:
         # print line for this order
-        result += f"  {play['name']}: " \
-                  f"{format_currency(thisAmount/100, 'USD', locale='en_US')} " \
+        result += f"  {perf['play']['name']}: " \
+                  f"{usd(amountFor(perf))} " \
                   f"({perf['audience']} seats)\n"
-        totalAmount += thisAmount
+    volumeCredits = totalVolumeCredits()
     result += f"Amount owed is " \
-              f"{format_currency(totalAmount/100, 'USD', locale='en_US')}\n"
+              f"{usd(totalAmount())}\n"
     result += f"You earned {volumeCredits} credits\n"
     return result
 

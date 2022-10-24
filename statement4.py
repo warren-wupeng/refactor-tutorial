@@ -17,22 +17,23 @@ INVOICE = {
 
 
 def statement(invoice, plays):
-    # step2 移除变量play
-    # 使用手法1: 提取方法
-    # 使用手法2：以查询代替临时变量
+    def playFor(aPerformance):
+        play = plays[aPerformance['playID']]
+        return play
+
     def amountFor(aPerformance, play):
         # extract function
-        if play['type'] == "tragedy":
+        if playFor(aPerformance)['type'] == "tragedy":
             result = 40000
             if aPerformance['audience'] > 30:
                 result += 1000 * (aPerformance['audience'] - 30)
-        elif play['type'] == "comedy":
+        elif playFor(aPerformance)['type'] == "comedy":
             result = 30000
             if aPerformance['audience'] > 20:
                 result += 10000 + 500 * (aPerformance['audience'] - 20)
                 result += 300 * aPerformance['audience']
         else:
-            raise ValueError(f"unknown type: {play['type']}")
+            raise ValueError(f"unknown type: {playFor(aPerformance)['type']}")
         return result
 
     totalAmount = 0
@@ -40,18 +41,16 @@ def statement(invoice, plays):
     result = f"Statement for {invoice['customer']}\n"
 
     for perf in invoice['performances']:
-        play = plays[perf['playID']]
-        thisAmount = amountFor(perf, play)
         # add volume credits
         volumeCredits += max(perf['audience'] - 30, 0)
         # add extra credit for every five comedy attendees
-        if "comedy" == play['type']:
+        if "comedy" == playFor(perf)['type']:
             volumeCredits += round(perf['audience'] / 5)
         # print line for this order
-        result += f"  {play['name']}: " \
-                  f"{format_currency(thisAmount/100, 'USD', locale='en_US')} " \
+        result += f"  {playFor(perf)['name']}: " \
+                  f"{format_currency(amountFor(perf, playFor(perf)) / 100, 'USD', locale='en_US')} " \
                   f"({perf['audience']} seats)\n"
-        totalAmount += thisAmount
+        totalAmount += amountFor(perf, playFor(perf))
     result += f"Amount owed is " \
               f"{format_currency(totalAmount/100, 'USD', locale='en_US')}\n"
     result += f"You earned {volumeCredits} credits\n"

@@ -17,6 +17,23 @@ INVOICE = {
 
 
 def statement(invoice, plays):
+    # step1 extract function amountFor
+    # 使用手法1：提炼函数
+
+    def amountFor(perf, play):
+        # extract function
+        if play['type'] == "tragedy":
+            thisAmount = 40000
+            if perf['audience'] > 30:
+                thisAmount += 1000 * (perf['audience'] - 30)
+        elif play['type'] == "comedy":
+            thisAmount = 30000
+            if perf['audience'] > 20:
+                thisAmount += 10000 + 500 * (perf['audience'] - 20)
+                thisAmount += 300 * perf['audience']
+        else:
+            raise ValueError(f"unknown type: {play['type']}")
+        return thisAmount
 
     totalAmount = 0
     volumeCredits = 0
@@ -39,22 +56,6 @@ def statement(invoice, plays):
               f"{format_currency(totalAmount/100, 'USD', locale='en_US')}\n"
     result += f"You earned {volumeCredits} credits\n"
     return result
-
-
-def amountFor(perf, play):
-    # extract function
-    if play['type'] == "tragedy":
-        thisAmount = 40000
-        if perf['audience'] > 30:
-            thisAmount += 1000 * (perf['audience'] - 30)
-    elif play['type'] == "comedy":
-        thisAmount = 30000
-        if perf['audience'] > 20:
-            thisAmount += 10000 + 500 * (perf['audience'] - 20)
-            thisAmount += 300 * perf['audience']
-    else:
-        raise ValueError(f"unknown type: {play['type']}")
-    return thisAmount
 
 
 if __name__ == '__main__':
