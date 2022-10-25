@@ -17,6 +17,7 @@ INVOICE = {
 
 
 def statement(invoice, plays):
+    # step10 extract function renderPlainText
 
     return renderPlainText(invoice, plays)
 
@@ -72,10 +73,9 @@ def renderPlainText(invoice, plays):
         result += f"  {playFor(perf)['name']}: " \
                   f"{usd(amountFor(perf))} " \
                   f"({perf['audience']} seats)\n"
-    volumeCredits = totalVolumeCredits()
     result += f"Amount owed is " \
               f"{usd(totalAmount())}\n"
-    result += f"You earned {volumeCredits} credits\n"
+    result += f"You earned {totalVolumeCredits()} credits\n"
     return result
 
 

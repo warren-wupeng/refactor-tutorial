@@ -25,6 +25,7 @@ def createStatementData(invoice, plays):
 
 
 class PerformanceCalculator:
+    # step27 create a factory method
 
     @classmethod
     def create(cls, aPerformance, aPlay):

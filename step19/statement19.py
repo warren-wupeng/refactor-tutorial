@@ -17,6 +17,7 @@ INVOICE = {
 
 
 def statement(invoice, plays):
+    # step19 replace loop
     def enrichPerformance(aPerformance):
 
         def playFor(aPerformance):

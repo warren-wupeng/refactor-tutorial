@@ -17,6 +17,7 @@ INVOICE = {
 
 
 def statement(invoice, plays):
+    # step5 extract function volumeCreditFor
 
     def playFor(aPerformance):
         play = plays[aPerformance['playID']]

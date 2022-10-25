@@ -17,6 +17,7 @@ INVOICE = {
 
 
 def statement(invoice, plays):
+    # step7 duplicate loop
 
     def playFor(aPerformance):
         play = plays[aPerformance['playID']]

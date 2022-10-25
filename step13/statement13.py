@@ -17,13 +17,16 @@ INVOICE = {
 
 
 def statement(invoice, plays):
+    # step13 enrich performances
     def enrichPerformance(aPerformance):
         result = dict() | aPerformance
         return result
 
     statementData = dict()
     statementData['customer'] = invoice['customer']
-    statementData['performances'] = list(map(enrichPerformance, invoice['performances']))
+    statementData['performances'] = list(
+        map(enrichPerformance, invoice['performances'])
+    )
 
     return renderPlainText(statementData, plays)
 

@@ -23,6 +23,8 @@ def createStatementData(invoice, plays):
 
 
 class PerformanceCalculator:
+    # step26 move totalAmount and totalVolumeCredit calculation
+    # into PerformanceCalculator
 
     def __init__(self, aPerformance, aPlay):
         self.performance = aPerformance

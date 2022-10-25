@@ -17,6 +17,7 @@ INVOICE = {
 
 
 def statement(invoice, plays):
+    # step14 move playFor to enrichPerformance
     def enrichPerformance(aPerformance):
         def playFor(aPerformance):
             play = plays[aPerformance['playID']]
@@ -83,10 +84,9 @@ def renderPlainText(data, plays):
         result += f"  {perf['play']['name']}: " \
                   f"{usd(amountFor(perf))} " \
                   f"({perf['audience']} seats)\n"
-    volumeCredits = totalVolumeCredits()
     result += f"Amount owed is " \
               f"{usd(totalAmount())}\n"
-    result += f"You earned {volumeCredits} credits\n"
+    result += f"You earned {totalVolumeCredits()} credits\n"
     return result
 
 

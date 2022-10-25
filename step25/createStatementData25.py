@@ -1,4 +1,5 @@
 def createStatementData(invoice, plays):
+    # step25 inline amountFor
     def enrichPerformance(aPerformance):
 
         def playFor(aPerformance):
@@ -32,6 +33,7 @@ def createStatementData(invoice, plays):
 
 
 class PerformanceCalculator:
+
 
     def __init__(self, aPerformance, aPlay):
         self.performance = aPerformance

@@ -17,6 +17,7 @@ INVOICE = {
 
 
 def statement(invoice, plays):
+    # step18 move totalVolumeCredits
     def enrichPerformance(aPerformance):
 
         def playFor(aPerformance):

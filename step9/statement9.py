@@ -17,6 +17,7 @@ INVOICE = {
 
 
 def statement(invoice, plays):
+    # step9 extract totalAmount
 
     def playFor(aPerformance):
         play = plays[aPerformance['playID']]
@@ -70,15 +71,10 @@ def statement(invoice, plays):
                   f"{usd(amountFor(perf))} " \
                   f"({perf['audience']} seats)\n"
 
-    volumeCredits = totalVolumeCredits()
-
     result += f"Amount owed is " \
               f"{usd(totalAmount())}\n"
-    result += f"You earned {volumeCredits} credits\n"
+    result += f"You earned {totalVolumeCredits()} credits\n"
     return result
-
-
-
 
 
 if __name__ == '__main__':

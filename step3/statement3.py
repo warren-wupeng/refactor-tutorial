@@ -17,6 +17,7 @@ INVOICE = {
 
 
 def statement(invoice, plays):
+    # step3 extract function playFor
     def amountFor(aPerformance, play):
         # extract function
         if play['type'] == "tragedy":

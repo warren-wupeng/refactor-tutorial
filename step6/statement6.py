@@ -17,6 +17,7 @@ INVOICE = {
 
 
 def statement(invoice, plays):
+    # step6 extract function usd
 
     def playFor(aPerformance):
         play = plays[aPerformance['playID']]

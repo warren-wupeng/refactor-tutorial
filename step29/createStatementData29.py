@@ -25,6 +25,7 @@ def createStatementData(invoice, plays):
 
 
 class PerformanceCalculator:
+    # step29 move volumeCredit to subclass
 
     @classmethod
     def create(cls, aPerformance, aPlay):

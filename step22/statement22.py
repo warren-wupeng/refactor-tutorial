@@ -19,6 +19,7 @@ INVOICE = {
 
 
 def statement(invoice, plays):
+
     return renderPlainText(createStatementData(invoice, plays))
 
 
@@ -38,6 +39,8 @@ def renderPlainText(data):
 
 
 def htmlStatement(invoice, plays):
+    # step22 implement htmlStatement
+    # move usd outer
     return renderHtml(createStatementData(invoice, plays))
 
 

@@ -17,6 +17,7 @@ INVOICE = {
 
 
 def statement(invoice, plays):
+    # step4 inline variable play
     def playFor(aPerformance):
         play = plays[aPerformance['playID']]
         return play

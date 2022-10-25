@@ -17,6 +17,7 @@ INVOICE = {
 
 
 def statement(invoice, plays):
+    # step20 move calculation into createStatementData
     return renderPlainText(createStatementData(invoice, plays), plays)
 
 

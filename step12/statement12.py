@@ -17,6 +17,7 @@ INVOICE = {
 
 
 def statement(invoice, plays):
+    # step12 move performances to statementData
     statementData = dict()
     statementData['customer'] = invoice['customer']
     statementData['performances'] = invoice['performances']
@@ -75,10 +76,9 @@ def renderPlainText(data, plays):
         result += f"  {playFor(perf)['name']}: " \
                   f"{usd(amountFor(perf))} " \
                   f"({perf['audience']} seats)\n"
-    volumeCredits = totalVolumeCredits()
     result += f"Amount owed is " \
               f"{usd(totalAmount())}\n"
-    result += f"You earned {volumeCredits} credits\n"
+    result += f"You earned {totalVolumeCredits()} credits\n"
     return result
 
 

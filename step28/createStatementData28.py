@@ -25,6 +25,7 @@ def createStatementData(invoice, plays):
 
 
 class PerformanceCalculator:
+    # introduce subclasses
 
     @classmethod
     def create(cls, aPerformance, aPlay):

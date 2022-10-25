@@ -17,9 +17,8 @@ INVOICE = {
 
 
 def statement(invoice, plays):
-    # step2 移除变量play
-    # 使用手法1: 提取方法
-    # 使用手法2：以查询代替临时变量
+    # step2 rename variable in amountFor
+
     def amountFor(aPerformance, play):
         # extract function
         if play['type'] == "tragedy":
